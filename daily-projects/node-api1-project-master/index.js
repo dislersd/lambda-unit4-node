@@ -40,3 +40,20 @@ server.post("/users", async (req, res) => {
     res.status(500).json({ message: "error creating user" });
   }
 });
+
+server.delete("/users/:id", (req, res) => {
+  const id = req.params.id;
+  Users.remove(id)
+    .then(response => res.status(200).json(response))
+    .catch(err =>
+      res.status(500).json({ err, message: "error deleting user" })
+    );
+});
+
+server.put("/users/:id", (req, res) => {
+  const update = req.body;
+  const id = req.params.id;
+  Users.update(id, update)
+    .then(response => res.status(200).json(response))
+    .catch(err => res.status(500).json({ err, message: "error updating use" }));
+});
