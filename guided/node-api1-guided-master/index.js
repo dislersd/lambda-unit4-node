@@ -54,6 +54,16 @@ server.delete("/api/hubs/:id", (req, res) => {
 });
 
 // Update a Hub
+server.put("/api/hubs/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    const response = await Hubs.update(id, data);
+    res.status(200).json(response);
+  } catch (error) {
+    res.status(500).json({ message: "error updating hub" });
+  }
+});
 
 const port = 8000;
 
