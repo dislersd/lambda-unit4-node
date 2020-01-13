@@ -1,14 +1,34 @@
 // import express from 'express' // ES2015 module syntax
 const express = require("express"); // commonJs modules
 
+const Hubs = require("./data/hubs-model");
+
 const server = express();
 
 // routes or endpoints
 
 // GET to '/'
 server.get("/", function(req, res) {
-  res.send("<h1>hello world</h1>");
+  res.send({ hello: "Web 25!" });
 });
+
+// See a list of Hubs
+server.get("/api/hubs", (req, res) => {
+  Hubs.find() // will return a promis
+    .then(hubs => {
+      res.status(200).json(hubs);
+    })
+    .catch(err => {
+      console.log(err);
+      // handle the error
+      res.status(500).json({ errorMessage: "Sorry there was an error" });
+    });
+});
+// Create a Hub
+
+// Delete a Hub
+
+// Update a Hub
 
 const port = 8000;
 
