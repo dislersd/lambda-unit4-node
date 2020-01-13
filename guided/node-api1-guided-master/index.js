@@ -28,7 +28,8 @@ server.get("/api/hubs", (req, res) => {
 });
 // Create a Hub
 server.post("/api/hubs", (req, res) => {
-  const hubData = req.body;
+  const hubData = req.body; // for this to work you need the server.use(express.json()) above
+
   Hubs.add(hubData)
     .then(hub => {
       res.status(201).json(hub);
@@ -40,6 +41,17 @@ server.post("/api/hubs", (req, res) => {
 });
 
 // Delete a Hub
+server.delete("/api/hubs/:id", (req, res) => {
+  const id = req.params.id;
+
+  Hubs.remove(id)
+    //.then(res => res.status(204).end()) one response possibility just sending status code
+    .then(result => res.status(200).json(result))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ errorMessage: "There was an error deleting" });
+    });
+});
 
 // Update a Hub
 
