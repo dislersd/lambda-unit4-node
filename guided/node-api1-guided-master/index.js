@@ -5,6 +5,8 @@ const Hubs = require("./data/hubs-model");
 
 const server = express();
 
+server.use(express.json());
+
 // routes or endpoints
 
 // GET to '/'
@@ -25,6 +27,17 @@ server.get("/api/hubs", (req, res) => {
     });
 });
 // Create a Hub
+server.post("/api/hubs", (req, res) => {
+  const hubData = req.body;
+  Hubs.add(hubData)
+    .then(hub => {
+      res.status(201).json(hub);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ errorMessage: "Sorry there was an error" });
+    });
+});
 
 // Delete a Hub
 
