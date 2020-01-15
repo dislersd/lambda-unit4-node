@@ -1,9 +1,12 @@
 const express = require("express");
+const postRouter = require("./posts/posts-router");
 
 const server = express();
 
-server.get('/', (req, res) => {
-  res.send('hello world')
-})
+server.use("/api/posts", postRouter);
+
+server.get("/", (req, res) => {
+  res.send("hello world");
+});
 
 module.exports = server;
