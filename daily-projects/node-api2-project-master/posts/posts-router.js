@@ -25,4 +25,13 @@ router.get("/:id/comments", (req, res) => {
     );
 });
 
+router.post("/", async (req, res) => {
+  try {
+    const response = await Post.insert(req.body);
+    res.status(201).json(response);
+  } catch (error) {
+    res.status(500).json({ error, message: "error creating post" });
+  }
+});
+
 module.exports = router;
