@@ -24,8 +24,12 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", (req, res) => {
-  // do your magic!
+router.get("/:id", validateUserId, async (req, res) => {
+  try {
+    res.status(200).json(req.user);
+  } catch (error) {
+    res.status(500).json({ error, message: "an error occured" });
+  }
 });
 
 router.get("/:id/posts", (req, res) => {
@@ -42,8 +46,11 @@ router.put("/:id", (req, res) => {
 
 //custom middleware
 
-function validateUserId(req, res, next) {
-  // do your magic!
+async function validateUserId(req, res, next) {
+  const user = await User.getById(req.params.id);
+  user
+    ? ((req.user = user), next())
+    : res.status(400).json({ message: "user does not exist" });
 }
 
 function validateUser(req, res, next) {
