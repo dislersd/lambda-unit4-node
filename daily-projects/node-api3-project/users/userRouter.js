@@ -4,16 +4,16 @@ const User = require("./userDb");
 const router = express.Router();
 router.use(express.json());
 
-router.post("/", (req, res) => {
+router.post("/", validateUser, (req, res) => {
   const user = req.body;
   User.insert(user)
     .then(response => res.status(200).json(response))
-    .catch(err => res.status(500).json({ message: "error creating user" }));
+    .catch(err =>
+      res.status(500).json({ err, message: "error creating user" })
+    );
 });
 
-router.post("/:id/posts", (req, res) => {
-  // do your magic!
-});
+router.post("/:id/posts", validatePost, (req, res) => {});
 
 router.get("/", async (req, res) => {
   try {
@@ -50,15 +50,23 @@ async function validateUserId(req, res, next) {
   const user = await User.getById(req.params.id);
   user
     ? ((req.user = user), next())
-    : res.status(400).json({ message: "user does not exist" });
+    : res.status(400).json({ message: "invalid user id" });
 }
 
 function validateUser(req, res, next) {
-  // do your magic!
+  req.body && Object.keys(req.body).length > 0
+    ? req.body.name
+      ? next()
+      : res.status(400).json({ message: "missing required name field" })
+    : res.status(400).json({ message: "missing user data" });
 }
 
 function validatePost(req, res, next) {
-  // do your magic!
+  req.body && Object.keys(req.body).length > 0
+    ? req.body.text
+      ? next()
+      : res.status(400).json({ message: "missing required text field" })
+    : res.status(400).json({ message: "missing post data" });
 }
 
 module.exports = router;
