@@ -1,5 +1,6 @@
 const express = require("express");
 const User = require("./userDb");
+const Post = require("../posts/postDb");
 
 const router = express.Router();
 router.use(express.json());
@@ -13,7 +14,14 @@ router.post("/", validateUser, (req, res) => {
     );
 });
 
-router.post("/:id/posts", validatePost, (req, res) => {});
+router.post("/:id/posts", validatePost, validateUserId, (req, res) => {
+  const postData = { ...req.body, user_id: req.params.id };
+  Post.insert(postData)
+    .then(response => res.status(201).json(response))
+    .catch(err =>
+      res.status(500).json({ err, message: "error creating post" })
+    );
+});
 
 router.get("/", async (req, res) => {
   try {
@@ -33,11 +41,19 @@ router.get("/:id", validateUserId, async (req, res) => {
 });
 
 router.get("/:id/posts", (req, res) => {
-  // do your magic!
+  User.getUserPosts(req.params.id)
+    .then(posts => res.status(200).json(posts))
+    .catch(err =>
+      res.status(500).json({ err, message: "error getting posts" })
+    );
 });
 
 router.delete("/:id", (req, res) => {
-  // do your magic!
+  User.remove(req.params.id)
+    .then(response => res.status(200).json(response))
+    .catch(err =>
+      res.status(500).json({ err, message: "error deleting user" })
+    );
 });
 
 router.put("/:id", (req, res) => {
