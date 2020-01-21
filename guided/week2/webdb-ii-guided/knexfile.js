@@ -12,9 +12,12 @@ module.exports = {
     useNullAsDefault: true, // ONLY needed for SQLite
     migrations: {
       directory: "./data/migrations"
+    },
+    seeds: {
+      directory: "./data/seeds"
     }
   },
-  
+
   staging: {
     client: "postgresql",
     connection: {

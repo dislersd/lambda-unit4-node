@@ -10,4 +10,7 @@ exports.up = function(knex) {
   });
 };
 
-exports.down = function(knex) {};
+// Down - How to undo changes from the up function
+exports.down = function(knex) {
+  return knex.schema.dropTableIfExists("songs");
+};
