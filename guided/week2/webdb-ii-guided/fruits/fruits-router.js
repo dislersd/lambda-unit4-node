@@ -1,17 +1,6 @@
 const express = require("express"); // 1. Bring in express
 const knex = require("knex"); // 2. Bring in knex
 
-const knexConfiguration = {
-  // client answers: which type of database? (sqlite, postgres, mysql, oracle)?
-  client: 'sqlite3', // the db driver
-  // the rest will depend on the type of database
-  // connection could be a string or an object
-  connection: {
-    filename: './data/produce.db3'
-  },
-  useNullAsDefault: true, // ONLY needed for SQLite
-}
-
 // db represents a connection to the database
 const db = knex(knexConfiguration);
 
@@ -30,7 +19,6 @@ router.get("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-
   // SELECT * FROM fruits WHERE id = 2
 
   const { id } = req.params;
