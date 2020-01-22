@@ -1,9 +1,11 @@
 const express = require("express");
 const server = express();
-server.use(express.json());
+const carsRouter = require("./resources/carsRouter");
+
+server.use("/api/cars", carsRouter);
 
 server.get("/", (req, res) => {
-  res.status(200).send("working");
+  res.send("working");
 });
 
 module.exports = server;
