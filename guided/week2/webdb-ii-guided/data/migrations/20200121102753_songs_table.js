@@ -4,7 +4,7 @@ exports.up = function(knex) {
     tbl.increments();
     tbl.string("name", 255).index();
     tbl.integer("duration");
-    tbl.string("artis", 255).index();
+    tbl.string("artist", 255).index();
     tbl.boolean("favorite").defaultTo(false);
     // most RDBMS store 1 for true and 0 for false when it comes to boolean values
   });
