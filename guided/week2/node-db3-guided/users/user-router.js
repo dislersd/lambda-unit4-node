@@ -19,7 +19,7 @@ router.get("/:id", (req, res) => {
   User.getById(id)
     .then(user => {
       if (user) {
-        res.status(200).json({user});
+        res.status(200).json({ user });
       } else {
         res.status(404).json({ message: "Could not find user with given id." });
       }
@@ -34,7 +34,7 @@ router.post("/", (req, res) => {
 
   User.insert(userData)
     .then(user => {
-      res.status(201).json({ user });
+      res.status(201).json(user);
     })
     .catch(err => {
       res.status(500).json({ message: "Failed to create new user" });
