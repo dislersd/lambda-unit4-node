@@ -4,7 +4,8 @@
   "description": "unit 4 week 2 sprint",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "server": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
