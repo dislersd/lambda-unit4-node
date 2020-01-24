@@ -1,0 +1,20 @@
+{
+  "name": "db-challenge",
+  "version": "1.0.0",
+  "description": "unit 4 week 2 sprint",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "knex": "^0.20.8",
+    "pg": "^7.17.1"
+  }
+}
